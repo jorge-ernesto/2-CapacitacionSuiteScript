@@ -1,0 +1,25 @@
+<suitelet scriptid="customscript_jel_bio_sl_listitemffill">
+  <description></description>
+  <isinactive>F</isinactive>
+  <name>Biomont SL ListaItemFulfillments Jorge</name>
+  <notifyadmins>F</notifyadmins>
+  <notifyemails></notifyemails>
+  <notifyowner>T</notifyowner>
+  <notifyuser>F</notifyuser>
+  <scriptfile>[/SuiteScripts/CapacitacionNetsuite_Jorge/ItemFulfillments/Suitelet.ListaItemFulfillments.JEL.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_jel_bio_sl_listitemffill">
+      <allemployees>F</allemployees>
+      <allpartners>F</allpartners>
+      <allroles>F</allroles>
+      <audslctrole></audslctrole>
+      <eventtype></eventtype>
+      <isdeployed>T</isdeployed>
+      <isonline>F</isonline>
+      <loglevel>DEBUG</loglevel>
+      <runasrole>ADMINISTRATOR</runasrole>
+      <status>TESTING</status>
+      <title>Biomont SL ListarItemFulfillments Jorge</title>
+    </scriptdeployment>
+  </scriptdeployments>
+</suitelet>
