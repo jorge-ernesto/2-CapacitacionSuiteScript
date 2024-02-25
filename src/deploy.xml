@@ -3,7 +3,11 @@
         <path>~/AccountConfiguration/*</path>
     </configuration>
     <files>
-        <path>~/FileCabinet/*</path>
+        <!-- POR DEFECTO -->
+        <!-- <path>~/FileCabinet/*</path> -->
+
+        <!-- SANDBOX -->
+        <path>~/FileCabinet/SuiteScripts/CapacitacionNetsuite_Jorge/*</path>
     </files>
     <objects>
         <path>~/Objects/*</path>

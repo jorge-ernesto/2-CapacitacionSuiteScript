@@ -1,0 +1,3 @@
+---- Notas ----
+
+La carpeta 'ScriptsTemplates' estaba dentro de la carpeta 'CapacitacionNetsuite_Jorge'

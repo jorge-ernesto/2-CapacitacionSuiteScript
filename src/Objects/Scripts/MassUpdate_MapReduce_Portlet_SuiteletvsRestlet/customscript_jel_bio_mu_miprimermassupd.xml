@@ -1,0 +1,23 @@
+<massupdatescript scriptid="customscript_jel_bio_mu_miprimermassupd">
+  <description></description>
+  <isinactive>F</isinactive>
+  <name>Biomont MU Mi Primer MassUpdate Jorge</name>
+  <notifyadmins>F</notifyadmins>
+  <notifyemails></notifyemails>
+  <notifyowner>T</notifyowner>
+  <notifyuser>F</notifyuser>
+  <scriptfile>[/SuiteScripts/CapacitacionNetsuite_Jorge/MassUpdate_MapReduce_Portlet_SuiteletvsRestlet/1 MassUpdate_MostrarLog_JEL.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_jel_bio_mu_miprimermassupd">
+      <allemployees>F</allemployees>
+      <allpartners>F</allpartners>
+      <allroles>T</allroles>
+      <audslctrole></audslctrole>
+      <isdeployed>T</isdeployed>
+      <loglevel>DEBUG</loglevel>
+      <recordtype>ITEMFULFILLMENT</recordtype>
+      <runasrole>ADMINISTRATOR</runasrole>
+      <status>RELEASED</status>
+    </scriptdeployment>
+  </scriptdeployments>
+</massupdatescript>

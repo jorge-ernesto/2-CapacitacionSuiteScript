@@ -1,0 +1,5 @@
+---- Notas ----
+
+Estos archivos fueron creados en los videos
+- Clase07-SuiteScript (MapReduce)
+- Clase08-Api Rest Netsuite

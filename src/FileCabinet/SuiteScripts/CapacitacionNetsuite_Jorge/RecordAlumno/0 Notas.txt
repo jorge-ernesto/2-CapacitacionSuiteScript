@@ -1,0 +1,7 @@
+---- Notas ----
+
+Estos archivos fueron creados en los videos
+- Clase01-Introducción a Netsuite
+- Clase02-Bundles, SDF y Introduccion SuiteScript
+- Clase03-SuiteScript (Client Script)
+- Clase04-SuiteScript (User Event)

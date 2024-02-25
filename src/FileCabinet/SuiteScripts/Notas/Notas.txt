@@ -1,0 +1,314 @@
+---- Notas ----
+
+Tipos de Scripts Existentes:
+	- UserEventScript: Scripts de eventos de usuario
+	- ClientScript: Scripts de cliente
+	- Suitelet: Paginas personalizadas de NetSuite, Peticiones HTTP (GET y POST), Servicios Web
+
+Tipos de Punto de Entrada en UserEventScript:
+	- beforeLoad: Se ejecuta cada vez que se carga un registro. Es el primer evento que se dispara en el script.
+	- beforeSubmit: Se ejecuta antes de guardar el registro.
+	- afterSubmit: Se ejecuta cada vez que el usuario guarda el registro.
+
+Tipos de Punto de Entrada en ClientScript:
+	- pageInit: Se dispara al terminar de cargar la pagina.
+	- fieldChanged: Editar un campo. Se dispara tan pronto como el usuario salga del campo o tan pronto como el usuario termine de escribir en un campo.
+	- validateField: Editar un campo. Se dispara tan pronto como el usuario salga del campo o tan pronto como el usuario termine de escribir en un campo. El focus regresa al mismo campo.
+	- saveRecord: Hacer clic en el boton Guardar. Se dispara al hacer clic en el boton Guardar.
+
+---- Preguntas ----
+
+- Cantidad de registro en sublista de tipo 'LIST'
+- En un formulario no encontre la opcion 'Download XML'
+	Transacciones -> Inventario -> Revaluar costos de inventario -> BIO_FRM_REVALUACION_DE_COSTOS
+
+---- Clase01-Introducción a Netsuite -----
+
+- Configuracion recomendada por Richar en "Set Preferences" en Oracle NetSuite
+
+- Funcion para obtener datos de usuario por consola en Oracle NetSuite
+	- nlapiGetContext()
+
+- Posible manera de generar Excel en SuiteScript
+	- https://learn.microsoft.com/en-us/previous-versions/office/developer/office-xp/aa140066%28v=office.10%29
+
+- Extensiones de Google Chrome
+	- NetSuite Field Explorer
+	- NetSuite Scripted Records
+	- NetSuite: Search Export
+
+- Creacion de record 'Alumnos Jorge'
+- Creacion de record 'Supervisor de Alumnos Jorge'
+- En record 'Alumnos Jorge':
+	- Creacion de campo 'Supervisor' en record 'Alumnos Jorge' para relacionarlos
+	- Creacion de campo 'Firstname'
+	- Creacion de campo 'Lastname'
+	- Creacion de campo 'Phone'
+	- Creacion de campo 'Email'
+	- Creacion de campo 'Date'
+
+---- Notas SuiteCloud Development Framework (SDF) ----
+
+- Instalacion de SuiteCloud CLI
+	- https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_1558708810.html#SuiteCloud-CLI-for-Node.js-Installation-Prerequisites
+	- Prerequisitos
+		- JDK 17.0.8
+		- Node.js 18.16.1
+	- Instalación CLI
+		- npm install -g @oracle/suitecloud-cli
+		- npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+		- suitecloud --version
+		- suitecloud
+	- Verificar ubicacion de archivos ejecutables en las variables de entorno PATH del sistema
+		- where suitecloud
+		- which suitecloud
+
+- Creación de Proyecto y configuracion de la CLI de SuiteCloud
+	- https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_155930842837.html#Setting-Up-SuiteCloud-CLI-for-Node.js
+	- suitecloud project:create —i
+	- suitecloud account:setup
+		- En Home creamos:
+			- ErnestoHome_SANDBOX
+			- ErnestoHome_PRODUCCION
+		- En Work creamos:
+			- ErnestoWork_SANDBOX
+			- ErnestoWork_PRODUCCION
+	- suitecloud file:import -i
+
+- Estructura del proyecto en SuiteCloud
+	- https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_155931221634.html#subsect_155931227706
+
+---- Clase02-Bundles, SDF y Introduccion SuiteScript ----
+
+- Para preparar el proyecto SuiteCloud Development Framework (SDF) eliminar las carpetas:
+	- src/AccountConfiguration
+	- src/FileCabinet/Templates
+	- src/FileCabinet/Web Site Hosting Files
+
+- Para preparar el proyecto SuiteCloud Development Framework (SDF) crear la carpeta:
+	- src/FileCabinet/SuiteScripts/CapacitacionNetsuite_Jorge
+
+- Creacion de scripts
+	- suitecloud file:create -i
+
+- Despliegue de scripts
+	- suitecloud project:adddependencies
+	- suitecloud project:validate
+	- suitecloud project:deploy
+
+---- Clase03-SuiteScript (Client Script) ----
+
+Encabezado de configuracion de un script
+	- @NApiVersion 2.1          ---- Definicion de la version (Siempre usar 2.1)
+	- @NScriptType ClientScript ---- Definicion del tipo de script (Esto varia dependiendo de los tipos de scripts)
+	- @NModuleScope SameAccount ---- Definicion del modulo (Esto sirve para compartir librerias)
+		- SameAccount: Permite ejecutar la libreria dentro del proyecto
+		- Public: Permite ejecutar la libreria desde otras carpetas, si queremos que otra persona que esta en otro proyecto consuma mi liberia, tendria que estar en 'Public'
+		- Si no hay ModuleScope definido, toma por defecto 'SameAccount'
+
+Creacion de Secuencias de comando (Scripts) en Oracle NetSuite
+	- Para los scripts de tipo "Evento del usuario" en la opcion "Despliegues" la opcion de "EJECUTAR COMO ROL" debe estar en "Administrador" (Ver el minuto 1:38:10 en el video 'Clase03')
+
+Resumen de comandos
+	- suitecloud project:create —i       (Crear proyecto)
+	- suitecloud account:setup           (Asignarle token al proyecto)
+	- suitecloud file:import -i          (Importar un archivo)
+	- suitecloud file:create -i          (Crear un archivo)
+	- suitecloud project:adddependencies (Agregar dependencias al proyecto)
+	- suitecloud project:validate        (Validar proyecto)
+	- suitecloud project:deploy          (Desplegar proyecto)
+
+Palabras clave en Help Center
+	- SuiteScript 2.x Module
+	- N/log
+		Utilice el módulo N/log para acceder manualmente a los métodos para registrar los detalles de ejecución del script. También se puede acceder a estos métodos utilizando el objeto de registro global. Para obtener más información sobre el objeto de registro global, consulte Objeto de registro .
+	- N/record
+		Utilice el módulo N/record para trabajar con registros de NetSuite. Puede utilizar este módulo para crear, eliminar, copiar, cargar o realizar cambios en un registro.
+	- N/currentRecord
+		Utilice el módulo N/currentRecord para acceder al registro que está activo en el contexto del cliente actual. Este módulo es siempre un objeto dinámico y el modo de trabajo siempre es dinámico, no dinámico/estándar diferido. Para obtener más información, consulte los modos estándar y dinámico de SuiteScript 2.x. Tenga en cuenta que cuando el registro actual está en modo de vista, no se puede editar; es un registro de solo lectura cuando está en modo de visualización. Como tal, las API establecidas no funcionan en el registro actual en el modo de visualización.
+	- N/ui/serverWidget
+		Utilice el módulo N/ui/serverWidget para trabajar con la interfaz de usuario dentro de NetSuite. Puede usar Suitelets para crear páginas personalizadas y asistentes que tengan una apariencia de NetSuite. También puede crear varios componentes de la interfaz de usuario de NetSuite (por ejemplo, formularios, campos, sublistas, pestañas).
+	- N/ui/message
+		Use el módulo N/ui/message para mostrar un mensaje en la parte superior de la pantalla debajo de la barra de menú.
+	- N/runtime
+		Utilice el módulo N/runtime para ver la configuración de tiempo de ejecución del script, la sesión o el usuario. También puede usar este módulo para configurar una clave de sesión y ver si una función en particular está habilitada en su cuenta.
+	- N/ui/dialog
+		Use el módulo N/ui/dialog para crear un cuadro de diálogo modal que persiste hasta que se presiona un botón en el cuadro de diálogo.
+	- N/email
+		Utilice el módulo N/email para enviar mensajes de correo electrónico desde NetSuite. Puede usar el módulo N/email para enviar correo electrónico regular, masivo y de campaña.
+	- N/search
+		Utilice el módulo N/search para crear y ejecutar búsquedas a pedido o guardadas y analizar e iterar a través de los resultados de la búsqueda. Puede utilizar este módulo para hacer lo siguiente:
+			- Buscar un solo registro usando palabras clave
+			- Crear y guardar búsquedas
+			- Cargue y ejecute búsquedas guardadas anteriormente
+			- Buscar registros duplicados
+			- Devolver un conjunto de registros que coincidan con los criterios de filtro que defina
+		También puede paginar los resultados de búsqueda y construir una navegación que salte entre las páginas anterior y siguiente. Debido a los beneficios de rendimiento, este es un enfoque adecuado para trabajar con un gran conjunto de resultados.
+	- N/query
+		Utilice el módulo N/query para crear y ejecutar consultas con el motor de consultas del libro de trabajo de SuiteAnalytics. Para obtener más información sobre el libro de trabajo de SuiteAnalytics, consulte Descripción general del libro de trabajo de SuiteAnalytics .
+		Con el módulo de consulta, puede:
+			- Utilice uniones de varios niveles para crear consultas utilizando datos de campo de varios tipos de registros.
+			- Cree condiciones (filtros) utilizando la lógica AND, OR y NOT, así como fórmulas y fechas relativas.
+			- Ordene los resultados de la consulta en función de los valores de varias columnas.
+			- Cargue y elimine las consultas guardadas existentes que se crearon mediante la interfaz del libro de trabajo de SuiteAnalytics.
+			- Ver resultados de consultas paginadas.
+			- Use promesas para la ejecución asíncrona.
+			- Convierta objetos de consulta en consultas SuiteQL y ejecute consultas SuiteQL arbitrarias.
+
+---- Clase04-SuiteScript (User Event) -----
+
+Contexto de Ejecución
+	- Un UserEventScript se puede ejecutar mediante Interfaz de Usuario, por ejemplo usando el modulo 'N/record' en un ClientScript
+	- Revisar la funcion 'ejecutarBoton' en el archivo 'Client.RecordAlumno.JEL.js', donde se creo un boton y donde se uso el modulo 'N/Record'
+	- Revisar la funcion 'beforeLoad' en el archivo 'UserEvent.RecordAlumno.JEL', donde se verifica el 'Contexto de Ejecución' y donde se detiene el script al 'Editar'
+	- La palabra clave en un 'Contexto de Ejecución' para representar Interfaz de Usuario es 'USERINTERFACE'
+
+Comparacion entre modulo N/search y modulo N/query:
+	- N/search
+		- Si es poca informacion usar search
+		- Si queremos recuperar pequeña informacion, como 500, 1000 lineas, usar modulo search
+	- N/query
+		- Si es mucha informacion usar query
+		- Si queremos manejar grandes cantidades o información masiva, usar modulo query
+	- Tambien podemos hacer diferentes busquedas cor el modulo search y unir la información por codigo
+
+---- Clase05-SuiteScript (User Event UI, Suitelet) ----
+
+Nombres de las operaciones de filtro en modulo N/search
+	- En modulo 'N/search' buscar 'search.Operator'
+
+Consideraciones de archivos
+	- NetSuite solo permite la creacion mediante script de un archivo de hasta 10 MB
+	- Se opta por crear varios archivos y guardarlos todos en un zip, y descargarte ese zip
+	- Subir archivos si te permite hasta 100 MB
+
+---- Clase06-Introducción a Script Programados, SuiteScript (Scheduled), SuiteScript (Mass Update) ----
+
+Archivos Excel
+	Consideraciones de archivos de tipo Excel
+		- Se pueden crear archivos de tipo Excel, solo que la extension te sale 'xls', cuando lo intenten abrir
+		desde el Excel que tengan, les va a salir que tienen un problema con version o que podria estar dañado, y si desean abrirlo,
+		esto se debe a que estamos usando una estructura XML
+		- Se pueden guardar un archivo dentro de FileCabinet (Archivador)
+		- Se puede guardar el nombre y la url de un archivo creado en un record, y se puede poner mas información como:
+			- Quien lo ha creado
+			- En que fecha se ha creado
+
+	Archivos de tipo Excel
+		- Workbooks es lo que se maneja en NetSuite para crear archivos de tipo Excel
+		- Los Workbooks son XML
+		- Este XML te lo da el mismo Microsoft
+			- https://learn.microsoft.com/en-us/previous-versions/office/developer/office-xp/aa140066%28v=office.10%29
+		- FTL significa 'Fremarker Template Language'
+
+	FreeMarker
+		- Documentacion
+			- https://freemarker.apache.org/index.html
+			- https://freemarker.apache.org/docs/ref_builtins_number.html
+		- FreeMarker Tester
+			- https://try.freemarker.apache.org/
+
+Archivos PDF
+	BFO (BFO Report Guide)
+	 	- Documentacion
+			- https://bfo.com/products/report/docs/userguide.pdf
+			- Buscar en el documento: 'Creating the XML' y 'Applying Stylesheets'
+			- BFO tiene:
+				- Las macros: Las macros sirven para poner paginacion en cabecera o como pie de pagina
+				- pagenumber: Como gestionar el numero de pagina
+				- Hay algunos estilos que no estan permitidos
+				- Barcodes: Es sencillo usar barcodes en BFO, le dices el tipo de codigo y el valor y el te lo pinta
+
+ScheduledScript
+	- Los scripts programados cuentan con 3 estados:
+		- Pruebas
+		- No programados (Normalmente usaremos esta opcion, nos permite tener la opcion de 'Guardar y ejecutar')
+		- Programado (Usaremos esta opcion cuando queramos programar el script)
+	- Tambien se pueden llamar con el modulo N/task desde un Suitelet
+
+Consideraciones de archivos
+	- La limitante de SuiteScript es crear un archivo mayor a 10 MB
+		1. Crear un archivo afuera:
+			- Realizar una peticion a un servidor externo
+			- El servidor construye un archivo de tipo txt, csv, excel o pdf
+			- El servidor vuelve a enviar el archivo a NetSuite y lo almacena dentro de FileCabinet (Archivador)
+			- NetSuite si permite agregar archivo hasta de 100MB de forma manual, como cuando le damos a 'Agregar archivo' en la carpeta 'SuiteScript'
+			- En NetSuite se crea un Endpoint que tenga como parametro el recibir archivos, entonces se puede simular la subida manual de archivos
+			- El procesamiento de la informacion ya no estaria en NetSuite, si no en otro aplicativo externo
+		2. Particionar archivo:
+			- Si sabemos que 25000 lineas superan la cantidad de 5, 6 MB
+			- Podemos crear varios archivos de 25000 lineas y todos guardarlos en una carpeta
+			- Luego con NetSuite podemos juntar los archivos de esa carpeta en un ZIP o RAR, que tambien tiene ese modulo NetSuite
+
+Consideraciones de sublitas
+	- En las sublistas generalmente se pone cuando es poca cantidad
+	- Se puede poner un mensaje que diga 'La cantidad supera las 5000 lineas, por favor descarga el Excel'
+	- Cuando sea menor a 5000 lo pintas
+
+Consideraciones de crear archivos con ScheduledScript
+	- Puedes buscar el archivo de las siguientes maneras:
+		- Documentos -> Archivos -> Archivador -> Buscar, con la palabra clave 'Archivo.xls'
+		- En tu correo con el nombre 'Archivo.xls'
+	- Si el archivo siempre es uno, es decir siempre tiene el mismo nombre 'Archivo.xls', lo que se puede hacer es que en el script programado,
+	se tendria que recuperar ese archivo, eliminarlo y comenzar a procesar la informacion y crear nuevamente el archivo,
+	en ese caso el usuario no va a encontrar el archivo hasta que vuelva a ser creado
+
+Malas practicas
+	- No hacer un for de record.load o un for de busquedas
+	- Es mejor hacer 2 queries por separado, una query que obtenga los datos de cabecera, y otra que obtenga los datos de linea,
+	entonces tengo 2 arreglos, comienzo a iterar cada arreglo y creo un nuevo arreglo, con la union de los dos, todo eso por script,
+	y por script es mucho mas rapido que intentar hacer una query para tratar de recuperar los dos juntos
+
+ScheduledScript
+	- Se puede ejecutar mediante Interfaz de Usuario
+	- Se puede ejecutar mediante otros Scripts
+	- Se puede ejecutar mediante el mismo Script (Mediante si mismo)
+
+---- Clase07-SuiteScript (MapReduce) ----
+
+MassUpdateScript
+	- Se puede ejecutar mediante Interfaz de Usuario
+
+Donde ejecutar MassUpdateScript
+	- Ruta: Lists -> Mass Update -> Mass Updates -> Custom Updates (Elegir Mass Update creados, aparece una interface parecida a Busqueda Guardada, se puede guardar el Mass Update)
+	- Ruta: Lists -> Mass Update -> Saved Mass Updates             (Elegir Mass Update guardados)
+	- on or before (antes)   -> Todo lo anterior desde esa fecha
+	- on or after  (despues) -> Todo lo posterior desde esa fecha
+
+MapReduceScript
+	- Se puede ejecutar mediante Interfaz de Usuario
+	- Se puede ejecutar mediante otros Scripts
+	- Se puede ejecutar mediante el mismo Script (Mediante si mismo)
+
+---- Clase08-Api Rest Netsuite ----
+
+Diferencia entre Suitelet como API y Restlet
+	- Suitelet como API
+		- Configuracion
+			- Requiere Despliegue de Suitelet "DISPONIBLE SIN INICIO DE SESIÓN"
+			- La configuracion de permisos debemos crearla nosotros por codigo en el Suitelet
+		- No maneja concurrencia, sin embargo maneja un tema de colas, esto quiere decir que las solicitudes se apilan por orden de llegada, esto permite poder bombardear el Suitelet con grandes cantidades de información
+		- La url EXTERNA de Suitelet (Se activa cuando habilitas "DISPONIBLE SIN INICIO DE SESIÓN") es mas sucia
+		- No almacena la Información del Sistema del usuario, podemos crear nuestro propio Record para hacer auditoria, que guarde informacion como "El empleo envio esto y yo le estoy respondiendo esto"
+		- Richard uso Suitelet como API para aplicativos moviles, de modo que ya no se preocupaba por la concurrencia
+		- No hacer servicios que eliminen, es decir un delete, las demas operaciones si puedes realizarlas
+	- Restlet
+		- Configuracion
+		 	- Requiere Despliegue de Restlet
+			- Requiere 2 Tokens de Integración "SuiteCloud Development Integration" ---- Ruta: Configuración -> Integración -> Gestionar integraciones
+			- Requiere 2 Tokens de Acceso por Usuario ---- Ruta: Configuración -> Usuarios/roles -> Tokens de acceso
+			- Requiere crear un Rol Personalizado y asignarlo al Usuario que realiza las consultas y que tiene los Tokens de Acceso
+			- Requiere asignar permisos al Rol Personalizado, suele ser dificil encontrar que permisos se requiere para cada consulta u operacion crud
+		- Maneja concurrencia de maximo 3 solicitudes, el script se cae si existen 3 solicitudes simultaneamente y se intenta realizar una solicitud adicional
+	 	- La url EXTERNA del Restlet es mas limpia
+		- Almacena la Información del Sistema del usuario
+		- Richard uso Reslet para un proyecto personal, para probar el tema de integracion y certificados
+		- No hacer servicios que eliminen, es decir un delete, las demas operaciones si puedes realizarlas
+
+---- Clase09-SuiteScript (Restlet) ----
+
+Pendiente
+
+---- Clase10-Gobernanza y optimización de Código ----
+
+Pendiente

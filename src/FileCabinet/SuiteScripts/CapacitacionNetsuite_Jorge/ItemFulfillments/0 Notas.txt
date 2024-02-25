@@ -1,0 +1,5 @@
+---- Notas ----
+
+Estos archivos fueron creados en los videos
+- Clase05-SuiteScript (User Event UI, Suitelet)
+- Clase06-Introducción a Script Programados, SuiteScript (Scheduled), SuiteScript (Mass Update)
