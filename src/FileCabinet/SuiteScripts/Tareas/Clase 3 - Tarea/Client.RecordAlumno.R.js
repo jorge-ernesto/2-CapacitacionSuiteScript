@@ -119,7 +119,7 @@ define(['N'],
             // Obtener el currentRecord
             let recordContext = scriptContext.currentRecord;
 
-            // Esto se ejecuta cuando se hacen cambios en el campo email
+            // SE EJECUTA SOLO CUANDO SE HACEN CAMBIOS EN EL CAMPO EMAIL
             if (scriptContext.fieldId == 'custrecord_jel_alumno_email') {
                 let emailValue = recordContext.getValue('custrecord_jel_alumno_email');
 

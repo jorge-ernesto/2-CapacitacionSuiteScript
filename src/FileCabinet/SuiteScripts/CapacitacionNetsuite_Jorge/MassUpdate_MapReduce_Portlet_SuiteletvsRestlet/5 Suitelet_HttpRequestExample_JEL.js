@@ -8,9 +8,9 @@
  */
 define(['N'],
 
-    (N) => {
+    function (N) {
 
-        const { https, log, http } = N;
+        const { log, https, http, crypto } = N;
 
         const route = 'https://dog.ceo/api/breeds/image/random/10';
         const sunatRoute = 'https://api.apis.net.pe/v1/tipo-cambio-sunat';
@@ -56,19 +56,43 @@ define(['N'],
          * @param {ServerResponse} scriptContext.response - Suitelet response
          * @since 2015.2
          */
-        const onRequest = (scriptContext) => {
+        function onRequest(scriptContext) {
 
             if (scriptContext.request.method == 'GET') {
 
+                // Encriptacion SHA256
+                // var inputString = "MiCadenaAEncryptar";
+                // var sha256Hash = encryptSHA256(inputString);
+                // throw sha256Hash;
+
+                // Solicitud HTTP
                 // let responseData = getPerritosImagesList();
                 // let responseData = getTipoCambioSunat();
                 let responseData = sendRequest("Richard", "Profesor");
 
+                // Respuesta
                 log.debug('Sunat Data', responseData);
-
                 scriptContext.response.setHeader('Content-type', 'application/json');
                 scriptContext.response.write(JSON.stringify(responseData));
             }
+        }
+
+        /**
+         * Función para encriptar una cadena en SHA-256
+         * @param {string} input - La cadena que deseas encriptar.
+         * @returns {string} - El hash SHA-256 en formato hexadecimal.
+         */
+        function encryptSHA256(input) {
+            var hash = crypto.createHash({
+                algorithm: crypto.HashAlg.SHA256
+            });
+            hash.update({
+                input: input
+            });
+            var hashDigest = hash.digest({
+                outputEncoding: crypto.Encoding.HEX
+            });
+            return hashDigest;
         }
 
         return { onRequest }

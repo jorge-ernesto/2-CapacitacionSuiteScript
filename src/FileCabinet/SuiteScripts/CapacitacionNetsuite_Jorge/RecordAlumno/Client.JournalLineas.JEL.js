@@ -47,8 +47,19 @@ define(['N'],
          */
         function fieldChanged(scriptContext) {
 
-            // Siempre se ejecuta, ya sea a nivel de cabecera o a nivel de linea (sublista)
-            console.log('fieldChanged', scriptContext);
+            // DEBUG
+            // SIEMPRE SE EJECUTA, YA SEA A NIVEL DE CABECERA O SUBLISTA
+            console.log('fieldChanged!!!', scriptContext);
+
+            // SI EL EVENTO OCURRE A NIVEL DE CAMPOS DE CABECERA
+            if (isEmpty(scriptContext.sublistId)) {
+                console.log('fieldChanged!!!', scriptContext);
+            }
+
+            // SI EL EVENTO OCURRE A NIVEL DE SUBLISTA
+            if (!isEmpty(scriptContext.sublistId)) {
+                console.log('fieldChanged!!!', scriptContext)
+            }
 
         }
 
@@ -205,6 +216,33 @@ define(['N'],
 
             // Confirmar guardar
             return confirm("Estas seguro que quieres guardar el record.");
+        }
+
+        /****************** Helper ******************/
+
+        let isEmpty = (value) => {
+
+            if (value === ``) {
+                return true;
+            }
+
+            if (value === null) {
+                return true;
+            }
+
+            if (value === undefined) {
+                return true;
+            }
+
+            if (value === `undefined`) {
+                return true;
+            }
+
+            if (value === `null`) {
+                return true;
+            }
+
+            return false;
         }
 
         return {

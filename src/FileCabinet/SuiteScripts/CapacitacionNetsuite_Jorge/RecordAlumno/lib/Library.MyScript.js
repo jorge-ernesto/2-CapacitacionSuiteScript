@@ -1,13 +1,4 @@
-/*
-Probar script en la consola de "Set Preferences"
-
-> require(['SuiteScripts/CapacitacionNetsuite_Jorge/RecordAlumno/lib/Library.MyScript.js'], function(lib){
-    Lib = lib;
-})
-> Lib
-> Lib.suma(1, 2)
-> Lib.createAlumno()
-*/
+// SuiteScript en el navegador
 
 /**
  * @NApiVersion 2.1
@@ -44,6 +35,17 @@ define(['N'],
             return recordAlumno.save();
 
         }
+
+        /******************/
+
+        /* Probar script en la consola del navegador - Usar pagina "Set Preferences" de Oracle NetSuite
+        require(['SuiteScripts/CapacitacionNetsuite_Jorge/RecordAlumno/lib/Library.MyScript.js'], function(lib) {
+            Lib = lib;
+        })
+        Lib;
+        Lib.suma(1, 2);
+        Lib.createAlumno();
+        */
 
         return { suma, createAlumno }
 

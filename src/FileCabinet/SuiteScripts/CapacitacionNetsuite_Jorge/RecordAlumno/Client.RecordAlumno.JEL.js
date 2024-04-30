@@ -65,10 +65,7 @@ define(['N'],
             // Obtener el currentRecord
             // let recordContext = scriptContext.currentRecord;
 
-            // Esto se ejecuta para todos los campos
-            // console.log('recordContext:', recordContext);
-
-            // Esto se ejecuta cuando se hacen cambios en el campo firstname
+            // SE EJECUTA SOLO CUANDO SE HACEN CAMBIOS EN EL CAMPO FIRSTNAME
             // if (scriptContext.fieldId == 'custrecord_jel_alumno_firstname') {
             //     let nombreValue = recordContext.getValue('custrecord_jel_alumno_firstname');
             //     alert("El Nombre es: " + nombreValue);
@@ -134,7 +131,7 @@ define(['N'],
             // Obtener el currentRecord
             let recordContext = scriptContext.currentRecord;
 
-            // Esto se ejecuta cuando se hacen cambios en el campo firstname
+            // SE EJECUTA SOLO CUANDO SE HACEN CAMBIOS EN EL CAMPO FIRSTNAME
             if (scriptContext.fieldId == 'custrecord_jel_alumno_firstname') {
                 let firstnameValue = recordContext.getValue('custrecord_jel_alumno_firstname');
 
